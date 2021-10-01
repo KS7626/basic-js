@@ -23,7 +23,57 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper (matrix) {
+  function getAroud(i, y, matrix) {
+    let result = [];
+    let iMax = matrix.length - 1;
+    let yMax = matrix[0].length - 1;
+
+    for (let ii = i - 1; ii <= i + 1; ii++) {
+      for (let yy = y -1; yy <= y + 1; yy++) {
+        if (ii >= 0 && ii <= iMax &&  yy >= 0 && yy <= yMax && (yy != y || ii != i )) result.push([ii, yy]);
+      }
+    }
+//console.log(result);
+    return result;
+  }
+
+  let result = [];
+  matrix.forEach(item => result.push(item));
+  let around;
+console.log(`${matrix}`);
+console.log(`${result}`);
+result[0][0] = 10;
+console.log(`${matrix}`);
+console.log(`${result}`);
+
+  matrix.forEach((arr, i) => {
+    arr.forEach((item, y) => {
+      if (item) {
+        result[i][y] = 1;
+      } else {
+        result[i][y] = 0;
+        around = getAroud(i, y, matrix);
+
+        around.forEach(item => {
+          console.log(`     ${item}`);
+          let k = matrix[item[0]][item[1]];
+          console.log(`        ${k}`);
+          if (matrix[item[0]][item[1]] === true) result[i][y] += 1;
+        })
+        console.log(`i=${i}  y=${y}  arr=${around} res=${result[i][y]}`);
+      }
+    });
+  });
+
+  console.log(result);
+  return result;
 }
+
+let matrix = [
+    [true, false, false],
+    [false, true, false],
+    [false, false, false]
+   ];
+minesweeper (matrix);   
+  
