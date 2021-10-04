@@ -34,46 +34,33 @@ export default function minesweeper (matrix) {
         if (ii >= 0 && ii <= iMax &&  yy >= 0 && yy <= yMax && (yy != y || ii != i )) result.push([ii, yy]);
       }
     }
-//console.log(result);
     return result;
   }
 
-  let result = [];
-  matrix.forEach(item => result.push(item));
   let around;
-console.log(`${matrix}`);
-console.log(`${result}`);
-result[0][0] = 10;
-console.log(`${matrix}`);
-console.log(`${result}`);
 
   matrix.forEach((arr, i) => {
     arr.forEach((item, y) => {
-      if (item) {
-        result[i][y] = 1;
-      } else {
-        result[i][y] = 0;
+      if (!item) {
+        matrix[i][y] = 0;
         around = getAroud(i, y, matrix);
 
         around.forEach(item => {
-          console.log(`     ${item}`);
           let k = matrix[item[0]][item[1]];
-          console.log(`        ${k}`);
-          if (matrix[item[0]][item[1]] === true) result[i][y] += 1;
+          if (matrix[item[0]][item[1]] === true) matrix[i][y] += 1;
         })
-        console.log(`i=${i}  y=${y}  arr=${around} res=${result[i][y]}`);
       }
     });
   });
 
-  console.log(result);
-  return result;
+  matrix.forEach((arr, i) => {
+    arr.forEach((item, y) => {
+      if (item === true) {
+        matrix[i][y] = 1;
+      }
+    });
+  });
+
+  return matrix;
 }
 
-let matrix = [
-    [true, false, false],
-    [false, true, false],
-    [false, false, false]
-   ];
-minesweeper (matrix);   
-  
