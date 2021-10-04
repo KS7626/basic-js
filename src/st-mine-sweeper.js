@@ -46,7 +46,6 @@ export default function minesweeper (matrix) {
         around = getAroud(i, y, matrix);
 
         around.forEach(item => {
-          let k = matrix[item[0]][item[1]];
           if (matrix[item[0]][item[1]] === true) matrix[i][y] += 1;
         })
       }
@@ -55,9 +54,7 @@ export default function minesweeper (matrix) {
 
   matrix.forEach((arr, i) => {
     arr.forEach((item, y) => {
-      if (item === true) {
-        matrix[i][y] = 1;
-      }
+      if (item === true) matrix[i][y] = 1;
     });
   });
 
